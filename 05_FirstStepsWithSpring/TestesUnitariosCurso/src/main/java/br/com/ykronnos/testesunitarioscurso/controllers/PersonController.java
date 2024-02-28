@@ -2,7 +2,6 @@ package br.com.ykronnos.testesunitarioscurso.controllers;
 
 import br.com.ykronnos.testesunitarioscurso.model.Person;
 import br.com.ykronnos.testesunitarioscurso.services.PersonServices;
-import br.com.ykronnos.testesunitarioscurso.utils.UtilsMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +17,17 @@ public class PersonController {
     private PersonServices personServices;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable Long id) throws Exception {
-        return personServices.findById(id);
+    public ResponseEntity<Person> findById(@PathVariable Long id) throws Exception {
+        try {
+            return ResponseEntity.ok(personServices.findById(id));
+        }catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Person> findAll() throws Exception {
+        return personServices.findAll();
     }
 
     @PostMapping
@@ -28,8 +36,12 @@ public class PersonController {
     }
 
     @PutMapping
-    public Person updatePerson(@RequestBody Person person) throws Exception {
-        return personServices.update(person);
+    public ResponseEntity<Person> updatePerson(@RequestBody Person person) throws Exception {
+        try {
+            return ResponseEntity.ok(personServices.update(person));
+        }catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

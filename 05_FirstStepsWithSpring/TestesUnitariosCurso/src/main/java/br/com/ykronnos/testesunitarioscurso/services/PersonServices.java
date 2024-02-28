@@ -6,10 +6,8 @@ import br.com.ykronnos.testesunitarioscurso.repositorys.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.logging.Logger;
+import java.util.Optional;
 
 @Service
 public class PersonServices {
@@ -25,6 +23,11 @@ public class PersonServices {
     }
 
     public Person create(Person person){
+//        Optional<Person> savedPerson = personRepository.findByAddress(person.getAddress());
+//        if(!savedPerson.isEmpty()){
+//            throw new ResourceNotFoundException("Email exists");
+//        }
+
         return personRepository.save(person);
     }
 
